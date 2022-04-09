@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleFilmConvert {
 
-    ScheduleFilmDTO convertScheduleFilmToDto(Schedules s){
+    public ScheduleFilmDTO convertScheduleFilmToDto(Schedules s){
         ScheduleFilmDTO schedules =  new ScheduleFilmDTO();
         schedules.setSchedulesID(s.getSchedulesID());
         schedules.setShowDate(s.getShowDate());

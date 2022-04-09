@@ -21,5 +21,5 @@ public interface FilmService {
 
     List<Films> findFilmByOnShow();
 
-    List<ScheduleFilmDTO> showAllFilmOnShow();
+    List<ScheduleFilmDTO> showAllFilmOnShow(Long id);
 }

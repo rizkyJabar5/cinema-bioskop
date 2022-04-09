@@ -2,7 +2,6 @@ package com.rizky.challenge4.backend.service;
 
 import com.rizky.challenge4.backend.data.dto.ScheduleFilmDTO;
 import com.rizky.challenge4.backend.data.entity.Films;
-import com.rizky.challenge4.backend.data.entity.Schedules;
 import com.rizky.challenge4.backend.data.mapper.ScheduleFilmConvert;
 import com.rizky.challenge4.backend.error.NotFoundExceptions;
 import com.rizky.challenge4.backend.repository.FilmRepository;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Transient;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -79,21 +79,22 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<ScheduleFilmDTO> showAllFilmOnShow() {
-        return schedulesRepository.findFilmSchedule()
+    public List<ScheduleFilmDTO> showAllFilmOnShow(Long id) {
+        return schedulesRepository.findFilmSchedule(id)
                 .stream()
-                .map(this::convertScheduleFilmToDto());
+                .map(convert::convertScheduleFilmToDto)
+                .collect(Collectors.toList());
     }
 
-    ScheduleFilmDTO convertScheduleFilmToDto(Schedules s){
-        ScheduleFilmDTO schedules =  new ScheduleFilmDTO();
-        schedules.setSchedulesID(s.getSchedulesID());
-        schedules.setShowDate(s.getShowDate());
-        schedules.setStartTime(s.getStartTime());
-        schedules.setEndTime(s.getEndTime());
-        schedules.setPrice(s.getPrice());
-        schedules.setTitleFilm(s.getFilm().getTitle());
-
-        return schedules;
-    }
+//    ScheduleFilmDTO convertScheduleFilmToDto(Schedules s){
+//        ScheduleFilmDTO schedules =  new ScheduleFilmDTO();
+//        schedules.setSchedulesID(s.getSchedulesID());
+//        schedules.setShowDate(s.getShowDate());
+//        schedules.setStartTime(s.getStartTime());
+//        schedules.setEndTime(s.getEndTime());
+//        schedules.setPrice(s.getPrice());
+//        schedules.setTitleFilm(s.getFilm().getTitle());
+//
+//        return schedules;
+//    }
 }

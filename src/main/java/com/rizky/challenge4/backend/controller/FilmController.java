@@ -1,7 +1,7 @@
 package com.rizky.challenge4.backend.controller;
 
+import com.rizky.challenge4.backend.data.dto.ScheduleFilmDTO;
 import com.rizky.challenge4.backend.data.entity.Films;
-import com.rizky.challenge4.backend.data.mapper.ScheduleFilmConvert;
 import com.rizky.challenge4.backend.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,6 @@ public class FilmController {
 
     @Autowired
     private FilmService filmService;
-
 
     @PostMapping("/films")
     public String addFilm(@RequestBody Films film) {
@@ -53,13 +52,12 @@ public class FilmController {
 
     @DeleteMapping("/delete-film/{id}")
     public String deleteFilmById(@PathVariable("id") long id) {
-
         return filmService.deleteFilmById(id);
     }
 
-//    ----------------Schedule----------------
+    //    ----------------Schedule----------------
     @GetMapping("/schedule/{id}")
-    public List<ScheduleFilmConvert> getScheduleFilm(@PathVariable("id") Long id){
-        return filmService.showAllFilmOnShow();
+    public List<ScheduleFilmDTO> getScheduleFilm(@PathVariable("id") Long id) {
+                return filmService.showAllFilmOnShow(id);
     }
 }
