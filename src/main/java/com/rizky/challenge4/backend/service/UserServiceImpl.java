@@ -2,6 +2,7 @@ package com.rizky.challenge4.backend.service;
 
 import com.rizky.challenge4.backend.data.dto.UserDto;
 import com.rizky.challenge4.backend.data.entity.Users;
+import com.rizky.challenge4.backend.data.mapper.UserConvert;
 import com.rizky.challenge4.backend.error.NotFoundExceptions;
 import com.rizky.challenge4.backend.repository.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UsersRepository userRepository;
+
+    @Autowired
+    private UserConvert userConvert;
 
     @Override
     public Users addUser(Users user) {
@@ -64,23 +68,13 @@ public class UserServiceImpl implements UserService {
         log.info("User loaded successfully");
         return userRepository.findAll()
                 .stream()
-                .map(this::convertEntityToDto)
+                .map(userConvert::convertEntityToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Users findByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    public UserDto convertEntityToDto(Users user) {
-        UserDto userdto = new UserDto();
-        userdto.setUserId(user.getId());
-        userdto.setUsername(user.getUsername());
-        userdto.setEmail(user.getEmail());
-        userdto.setPassword(user.getPassword());
-        userdto.setAddress(user.getAddress());
-        return userdto;
     }
 
 }

@@ -2,6 +2,7 @@ package com.rizky.challenge4.backend.service;
 
 import com.rizky.challenge4.backend.data.dto.ScheduleFilmDTO;
 import com.rizky.challenge4.backend.data.entity.Films;
+import com.rizky.challenge4.backend.data.entity.Schedules;
 import com.rizky.challenge4.backend.data.mapper.ScheduleFilmConvert;
 import com.rizky.challenge4.backend.error.NotFoundExceptions;
 import com.rizky.challenge4.backend.repository.FilmRepository;
@@ -10,9 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Transient;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,18 +33,17 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Films addFilm(Films film) {
+    public void addFilm(Films film) {
         log.info("Film {} has been successfully saved to the database", film.getTitle());
-        return filmRepository.save(film);
+        filmRepository.save(film);
     }
 
     @Override
-    public List<Films> addManyFilms(List<Films> film) {
+    public void addManyFilms(List<Films> film) {
         log.info("Films has been successfully saved to the database");
-        return filmRepository.saveAll(film);
+        filmRepository.saveAll(film);
     }
 
-    @Transient
     @Override
     public Films updateFilm(Films film) {
         log.info("Film {} has been successfully to update", film.getTitle());
@@ -79,22 +79,24 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<ScheduleFilmDTO> showAllFilmOnShow(Long id) {
+    public Optional<ScheduleFilmDTO> showFilmOnSchedule(Long id) {
         return schedulesRepository.findFilmSchedule(id)
+                .stream()
+                .map(convert::convertScheduleFilmToDto)
+                .findFirst();
+    }
+
+    @Override
+    public List<ScheduleFilmDTO> showAllSchedule() {
+        return schedulesRepository.findAll()
                 .stream()
                 .map(convert::convertScheduleFilmToDto)
                 .collect(Collectors.toList());
     }
 
-//    ScheduleFilmDTO convertScheduleFilmToDto(Schedules s){
-//        ScheduleFilmDTO schedules =  new ScheduleFilmDTO();
-//        schedules.setSchedulesID(s.getSchedulesID());
-//        schedules.setShowDate(s.getShowDate());
-//        schedules.setStartTime(s.getStartTime());
-//        schedules.setEndTime(s.getEndTime());
-//        schedules.setPrice(s.getPrice());
-//        schedules.setTitleFilm(s.getFilm().getTitle());
-//
-//        return schedules;
-//    }
+    @Override
+    public void addSchedule(Schedules schedules) {
+        schedulesRepository.save(schedules);
+    }
+    
 }

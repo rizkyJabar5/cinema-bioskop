@@ -2,17 +2,16 @@ package com.rizky.challenge4.backend.controller;
 
 import com.rizky.challenge4.backend.data.dto.ScheduleFilmDTO;
 import com.rizky.challenge4.backend.data.entity.Films;
+import com.rizky.challenge4.backend.data.entity.Schedules;
 import com.rizky.challenge4.backend.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@Controller
 public class FilmController {
 
     @Autowired
@@ -31,7 +30,7 @@ public class FilmController {
     }
 
     @GetMapping("/films")
-    public ResponseEntity<List<Films>> getAllFilms(String title) {
+    public ResponseEntity<List<Films>> getAllFilms() {
         return ResponseEntity.ok().body(filmService.findAllFilms());
     }
 
@@ -57,7 +56,18 @@ public class FilmController {
 
     //    ----------------Schedule----------------
     @GetMapping("/schedule/{id}")
-    public List<ScheduleFilmDTO> getScheduleFilm(@PathVariable("id") Long id) {
-                return filmService.showAllFilmOnShow(id);
+    public ScheduleFilmDTO getScheduleFilm(@PathVariable("id") Long id) {
+        return filmService.showFilmOnSchedule(id).get();
+    }
+
+    @GetMapping("/schedules")
+    public List<ScheduleFilmDTO> showAllSchedule(){
+        return filmService.showAllSchedule();
+    }
+
+    @PostMapping("/new-schedule")
+    public String addNewSchedule(@RequestBody Schedules sch){
+        filmService.addSchedule(sch);
+        return sch.toString();
     }
 }

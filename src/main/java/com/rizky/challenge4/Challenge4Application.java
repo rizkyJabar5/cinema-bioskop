@@ -48,6 +48,8 @@ public class Challenge4Application {
             service.addFilm( new Films("Chat Ku Tenggelam oleh banyaknya Pesan dari Teman Dosenku", "Skripsi dipersulit. Bimbingan pun jadi sulit. Lulus pun jadi sulit", true));
             service.addFilm( new Films("Katanya Mau Lulus? Skripsi Kok Dianggurin", "Salah Satu pernyataan paling nyelekit", false));
             service.addFilm( new Films("Pocong Absurd", "Ini film horor ya?", true));
+            service.addFilm( new Films("Kuntilanak", "film horor ya?", true));
+
 
         };
     }

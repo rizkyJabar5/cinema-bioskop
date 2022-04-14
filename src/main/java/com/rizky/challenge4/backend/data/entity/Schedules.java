@@ -1,5 +1,6 @@
 package com.rizky.challenge4.backend.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,23 +14,28 @@ import java.util.Date;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "schedules")
+@Table(name = "schedules", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "film_id")
+})
 public class Schedules {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long schedulesID;
 
     @Column(name = "show_date")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd-MM-yyyy", timezone = "Asia/Jakarta")
     private Date showDate;
 
     @Column(name = "start_time")
     @Temporal(TemporalType.TIME)
+    @JsonFormat(pattern = "HH:mm", timezone = "Asia/Jakarta")
     private Date startTime;
 
     @Column(name = "end_time")
     @Temporal(TemporalType.TIME)
+    @JsonFormat(pattern = "HH:mm", timezone = "Asia/Jakarta")
     private Date endTime;
 
     @Column(name = "price")
@@ -46,5 +52,15 @@ public class Schedules {
         this.endTime = endTime;
         this.price = price;
         this.film = film;
+    }
+
+    @Override
+    public String toString() {
+        return "Schedule [\nid:" + getSchedulesID()+
+                "\nShow Date:" + getShowDate() +
+                "\nStart Time:" + getStartTime() +
+                "\nEnd Time: " + getEndTime() +
+                "\nPrice:" + getPrice() +
+                "\nFilm: " + getFilm();
     }
 }

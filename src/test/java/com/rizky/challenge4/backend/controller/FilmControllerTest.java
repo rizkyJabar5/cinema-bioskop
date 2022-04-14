@@ -36,7 +36,7 @@ class FilmControllerTest {
     @Test
     @DisplayName("Test GET title Film")
     public void getUserType() {
-        filmController.getAllFilms("Pocong Absurd");
+        filmController.getAllFilms();
     }
 
 
