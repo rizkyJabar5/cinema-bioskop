@@ -1,6 +1,7 @@
 package com.rizky.challenge4.backend.controller;
 
-import com.rizky.challenge4.backend.data.entity.Films;
+import com.rizky.challenge4.backend.model.dto.FilmDto;
+import com.rizky.challenge4.backend.model.entity.Films;
 import com.rizky.challenge4.backend.repository.FilmRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 
 @SpringBootTest
 class FilmControllerTest {
@@ -21,7 +23,7 @@ class FilmControllerTest {
     @Test
     @DisplayName("Test Tambah Film")
     public void addfilm() {
-        String actual = filmController.addFilm(new Films(100L,"Soju", "Minuman berkhasiat", false));
+        String actual = String.valueOf(filmController.addFilm(new FilmDto(100L,"SJ","Soju", "Minuman berkhasiat", false)));
         Films film = new Films();
         film.setFilmID(100L);
         film.setTitle("Soju");
@@ -29,6 +31,7 @@ class FilmControllerTest {
         film.setOnShow(false);
         String expected = "List film [\nid=" + film.getFilmID() + ", \ntitle=" + film.getTitle() + ",\ndescription="
                 + film.getDescription() + "\n]";
+        ResponseEntity.ok().body(expected);
         System.out.println(expected + "\n" + actual);
         Assertions.assertEquals(expected, actual);
     }

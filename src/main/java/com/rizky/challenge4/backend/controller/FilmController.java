@@ -1,73 +1,89 @@
 package com.rizky.challenge4.backend.controller;
 
-import com.rizky.challenge4.backend.data.dto.ScheduleFilmDTO;
-import com.rizky.challenge4.backend.data.entity.Films;
-import com.rizky.challenge4.backend.data.entity.Schedules;
+import com.rizky.challenge4.backend.model.dto.FilmDto;
+import com.rizky.challenge4.backend.model.dto.ScheduleDto;
+import com.rizky.challenge4.backend.model.entity.Films;
 import com.rizky.challenge4.backend.service.FilmService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
+@Tag(name="Films Controller", description = "API for handling transaction Film and Schedule CRUD operation entity in the Cinematic database.")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/films")
 public class FilmController {
 
     @Autowired
     private FilmService filmService;
 
-    @PostMapping("/films")
-    public String addFilm(@RequestBody Films film) {
-        filmService.addFilm(film);
-        return film.toString();
+    @Operation(summary = "This method function to add film detailing.")
+    @PostMapping("/add")
+    public ResponseEntity<String> addFilm(@RequestBody FilmDto dto) {
+        filmService.addFilm(dto);
+        return ResponseEntity.status(201).body(dto.toString());
     }
 
-    @PostMapping("/many-film")
-    public String addManyFilms(@RequestBody List<Films> film) {
+    @Operation(summary = "This method function to add many film detailing with array object.")
+    @PostMapping("/add-films")
+    public ResponseEntity<String> addManyFilms(@RequestBody List<Films> film) {
         filmService.addManyFilms(film);
-        return film.toString();
+        return ResponseEntity.status(201).body(film.toString());
     }
 
-    @GetMapping("/films")
+    @Operation(summary = "Get or show all the data entity from the database.")
+    @GetMapping("/showall")
     public ResponseEntity<List<Films>> getAllFilms() {
-        return ResponseEntity.ok().body(filmService.findAllFilms());
+        return ResponseEntity.status(202).body(filmService.findAllFilms());
     }
 
-    @GetMapping("/film/{id}")
-    public Films getFilmById(@PathVariable("id") long id) {
-        return filmService.getFilmById(id);
+    @Operation(summary = "Get or search the data by id from the entity.")
+    @GetMapping("/{id}")
+    public ResponseEntity<Films> getFilmById(@PathVariable("id") long id) {
+        return ResponseEntity.status(202).body(filmService.getFilmById(id));
     }
 
-    @GetMapping("/filmshow")
-    public List<Films> getFilmOnShow() {
-        return filmService.findFilmByOnShow();
+    @Operation(summary = "Get or search movie is on show.")
+    @GetMapping("/onshow")
+    public ResponseEntity<List<Films>> getFilmOnShow() {
+        return ResponseEntity.status(202).body(filmService.findFilmByOnShow());
     }
 
-    @PutMapping("/update-film")
-    public Films updateFilmID(@RequestBody Films film) {
-        return filmService.updateFilm(film);
+    @Operation(summary = "This method function to edit film detail.")
+    @PutMapping("/update")
+    public ResponseEntity<Films> updateFilmID(@RequestBody Films film) {
+        return ResponseEntity.ok().body(filmService.updateFilm(film));
     }
 
-    @DeleteMapping("/delete-film/{id}")
-    public String deleteFilmById(@PathVariable("id") long id) {
-        return filmService.deleteFilmById(id);
+    @Operation(summary = "Delete movie by calling id")
+    @DeleteMapping("/del/{id}")
+    public ResponseEntity<String> deleteFilmById(@PathVariable("id") long id) {
+        filmService.deleteFilmById(id);
+        return ResponseEntity.accepted().body("Delete film " + id + "has successfully.");
+
     }
 
     //    ----------------Schedule----------------
+    @Operation(summary = "Get or search the data by id from the entity.")
     @GetMapping("/schedule/{id}")
-    public ScheduleFilmDTO getScheduleFilm(@PathVariable("id") Long id) {
-        return filmService.showFilmOnSchedule(id).get();
+    public ResponseEntity<ScheduleDto> getScheduleFilm(@PathVariable("id") Long id) {
+        return ResponseEntity.status(203).body(filmService.showFilmOnSchedule(id).get());
     }
 
-    @GetMapping("/schedules")
-    public List<ScheduleFilmDTO> showAllSchedule(){
-        return filmService.showAllSchedule();
+    @Operation(summary = "Get or search all entity data of field from the database.")
+    @GetMapping("/list-schedules")
+    public ResponseEntity<List<ScheduleDto>> showAllSchedule(){
+        return ResponseEntity.status(203).body(filmService.showAllSchedule());
     }
 
-    @PostMapping("/new-schedule")
-    public String addNewSchedule(@RequestBody Schedules sch){
-        filmService.addSchedule(sch);
-        return sch.toString();
+    @Operation(summary = "This method function to add schedule if film is present on the database.")
+    @PostMapping("/schedule/new")
+    public ResponseEntity<String> addNewSchedule(@RequestBody ScheduleDto sch, FilmDto film) throws ParseException {
+        filmService.addSchedule(sch, film);
+        return ResponseEntity.ok().body(sch.toString());
     }
 }

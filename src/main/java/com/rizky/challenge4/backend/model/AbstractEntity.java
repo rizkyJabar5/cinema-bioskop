@@ -1,8 +1,9 @@
-package com.rizky.challenge4.backend.data;
+package com.rizky.challenge4.backend.model;
 
-import lombok.NonNull;
-
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
@@ -10,7 +11,6 @@ public abstract class AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Long id;
 
     public Long getId() {

@@ -1,9 +1,10 @@
 package com.rizky.challenge4.backend.controller;
 
-import com.rizky.challenge4.backend.data.dto.UserDto;
-import com.rizky.challenge4.backend.data.entity.Users;
+import com.rizky.challenge4.backend.model.dto.UserDto;
+import com.rizky.challenge4.backend.model.entity.Users;
 import com.rizky.challenge4.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,51 +12,52 @@ import java.util.List;
 
 @RestController
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/user")
-    public String addUser(@RequestBody Users user){
+    @PostMapping("/add-user")
+    public ResponseEntity<String> addUser(@RequestBody UserDto user){
         userService.addUser(user);
-        return user.toString();
+        return ResponseEntity.status(201).body(user.toString());
     }
 
-    @PostMapping("/users")
-    public String addUsers(@RequestBody List<Users> user){
+    @PostMapping("/add-users")
+    public ResponseEntity<String> addUsers(@RequestBody List<Users> user){
         userService.addUsers(user);
-        return user.toString();
+        return ResponseEntity.status(201).body(user.toString());
     }
 
-    @GetMapping("/users")
-    public List<UserDto> showAllUsers() {
-        return userService.findAllUsers();
+    @GetMapping("/showall")
+    public ResponseEntity<List<UserDto>> showAllUsers() {
+        return ResponseEntity.status(202).body(userService.findAllUsers());
     }
 
-    @GetMapping("/users/{id}")
-    public Users showUsersById(@PathVariable("id") Long id) {
-        return userService.findUserById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Users> showUsersById(@PathVariable("id") Long id) {
+        return ResponseEntity.status(202).body(userService.findUserById(id));
     }
 
-    @GetMapping("/user-name/{username}")
-    public Users showUsersByUsername(@PathVariable String username) {
-        return userService.findByUsername(username);
+    @GetMapping("/search/{username}")
+    public ResponseEntity<Users> showUsersByUsername(@PathVariable String username) {
+        return ResponseEntity.status(202).body(userService.findByUsername(username));
     }
 
-    @GetMapping("/user-email/{email}")
-    public Users showUsersByEmail(@PathVariable String email) {
-        return userService.findByEmail(email);
+    @GetMapping("/find/{email}")
+    public ResponseEntity<Users> showUsersByEmail(@PathVariable String email) {
+        return ResponseEntity.status(202).body(userService.findByEmail(email));
     }
 
-    @PutMapping("/user-update")
-    public Users updateUser(@RequestBody Users user){
-        return userService.updateUser(user);
+    @PutMapping("/update")
+    public ResponseEntity<Users> updateUser(@RequestBody Users user){
+        return ResponseEntity.ok().body(userService.updateUser(user));
     }
 
-    @DeleteMapping("/user/{id}")
-    public String deleteUserById(@PathVariable("id") Long id){
-        return userService.deleteUserById(id);
+    @DeleteMapping("/del/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") Long id){
+        userService.deleteUserById(id);
+        return ResponseEntity.accepted().body("Delete " + id + " succesfully");
     }
 }

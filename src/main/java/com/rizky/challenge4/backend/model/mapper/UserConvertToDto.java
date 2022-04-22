@@ -1,11 +1,12 @@
-package com.rizky.challenge4.backend.data.mapper;
+package com.rizky.challenge4.backend.model.mapper;
 
-import com.rizky.challenge4.backend.data.dto.UserDto;
-import com.rizky.challenge4.backend.data.entity.Users;
+import com.rizky.challenge4.backend.model.dto.UserDto;
+import com.rizky.challenge4.backend.model.entity.Users;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserConvert {
+public class UserConvertToDto {
+
     public UserDto convertEntityToDto(Users user) {
         UserDto userdto = new UserDto();
         userdto.setUserId(user.getId());

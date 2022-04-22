@@ -1,15 +1,15 @@
 package com.rizky.challenge4.backend.service;
 
-import com.rizky.challenge4.backend.data.dto.UserDto;
-import com.rizky.challenge4.backend.data.entity.Users;
+import com.rizky.challenge4.backend.model.dto.UserDto;
+import com.rizky.challenge4.backend.model.entity.Users;
 
 import java.util.List;
 
 public interface UserService {
 
-    Users addUser(Users user);
+    void addUser(UserDto user);
 
-    List<Users> addUsers(List<Users> user);
+    void addUsers(List<Users> user);
 
     Users updateUser(Users User);
 
@@ -17,7 +17,7 @@ public interface UserService {
 
     Users findByUsername(String username);
 
-    String deleteUserById(Long id);
+    void deleteUserById(Long id);
 
     List<UserDto> findAllUsers();
 

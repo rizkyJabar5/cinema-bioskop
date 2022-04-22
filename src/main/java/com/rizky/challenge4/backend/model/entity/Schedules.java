@@ -1,4 +1,4 @@
-package com.rizky.challenge4.backend.data.entity;
+package com.rizky.challenge4.backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class Schedules {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long schedulesID;
+    private Long schedulesId;
 
     @Column(name = "show_date")
     @Temporal(TemporalType.DATE)
@@ -43,20 +43,12 @@ public class Schedules {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "film_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Films film;
-
-    public Schedules(Date showDate, Date startTime, Date endTime, Float price, Films film) {
-        this.showDate = showDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.price = price;
-        this.film = film;
-    }
 
     @Override
     public String toString() {
-        return "Schedule [\nid:" + getSchedulesID()+
+        return "Schedule [\nid:" + getSchedulesId()+
                 "\nShow Date:" + getShowDate() +
                 "\nStart Time:" + getStartTime() +
                 "\nEnd Time: " + getEndTime() +

@@ -1,6 +1,6 @@
-package com.rizky.challenge4.backend.data.entity;
+package com.rizky.challenge4.backend.model.entity;
 
-import com.rizky.challenge4.backend.data.AbstractEntity;
+import com.rizky.challenge4.backend.model.AbstractEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

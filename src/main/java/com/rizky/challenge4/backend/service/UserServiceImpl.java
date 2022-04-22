@@ -1,8 +1,8 @@
 package com.rizky.challenge4.backend.service;
 
-import com.rizky.challenge4.backend.data.dto.UserDto;
-import com.rizky.challenge4.backend.data.entity.Users;
-import com.rizky.challenge4.backend.data.mapper.UserConvert;
+import com.rizky.challenge4.backend.model.dto.UserDto;
+import com.rizky.challenge4.backend.model.entity.Users;
+import com.rizky.challenge4.backend.model.mapper.UserConvertToDto;
 import com.rizky.challenge4.backend.error.NotFoundExceptions;
 import com.rizky.challenge4.backend.repository.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,24 +20,30 @@ public class UserServiceImpl implements UserService {
     private UsersRepository userRepository;
 
     @Autowired
-    private UserConvert userConvert;
+    private UserConvertToDto userConvertToDto;
 
     @Override
-    public Users addUser(Users user) {
-        log.info("User {} telah berhasil ditambahkan", user.getUsername());
-        return userRepository.save(user);
+    public void addUser(UserDto user) {
+        Users users = new Users();
+        users.setUsername(user.getUsername());
+        users.setEmail(user.getEmail());
+        users.setPassword(user.getPassword());
+        users.setAddress(user.getAddress());
+        log.info("User {} telah berhasil ditambahkan", users.getUsername());
+        userRepository.save(users);
     }
 
     @Override
-    public List<Users> addUsers(List<Users> user) {
+    public void addUsers(List<Users> user) {
         log.info("users has been successfully saved to the database");
-        return userRepository.saveAll(user);
+        userRepository.saveAll(user);
     }
 
     @Override
     public Users updateUser(Users user) {
         log.info("User {} has been successfully to update", user.getUsername());
-        Users userUpdate = userRepository.findById(user.getId()).get();
+        Users userUpdate = userRepository.findById(user.getId())
+                .orElseThrow(() -> new NotFoundExceptions("User not found"));
         userUpdate.setUsername(user.getUsername());
         userUpdate.setEmail(user.getEmail());
         userUpdate.setPassword(user.getPassword());
@@ -58,9 +64,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String deleteUserById(Long id) {
+    public void deleteUserById(Long id) {
         userRepository.deleteById(id);
-        return "Delete " + id + " successfully.";
     }
 
     @Override
@@ -68,7 +73,7 @@ public class UserServiceImpl implements UserService {
         log.info("User loaded successfully");
         return userRepository.findAll()
                 .stream()
-                .map(userConvert::convertEntityToDto)
+                .map(userConvertToDto::convertEntityToDto)
                 .collect(Collectors.toList());
     }
 
