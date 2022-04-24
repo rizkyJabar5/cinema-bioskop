@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Setter
 @Getter
@@ -31,9 +30,6 @@ public class Films {
 
     @Column(name = "on_show")
     private boolean onShow;
-
-    @OneToMany(mappedBy = "film")
-    private Collection<Schedules> schedules;
 
     @Override
     public String toString() {
