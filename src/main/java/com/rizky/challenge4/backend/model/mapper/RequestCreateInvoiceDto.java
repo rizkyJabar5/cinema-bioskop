@@ -14,8 +14,8 @@ public class RequestCreateInvoiceDto {
         invoice.setScheduleDate(history.getSchedule().getShowDate().toString());
         invoice.setScheduleTime(history.getSchedule().getStartTime().toString());
         invoice.setTitleFilm(history.getFilm().getTitle());
-        invoice.setSeatsOrdered(history.getSeats().getSeatsRow().toString());
-        invoice.setSeatsOrdered(history.getSeats().getSeatsNumber().toString());
+        invoice.setSeatsOrdered(history.getSeats().getSeatsNumberId().getSeatsNumber().toString());
+        invoice.setSeatsOrdered(history.getSeats().getSeatsNumberId().getSeatsRow().toString());
         invoice.setGetPrice(history.getSchedule().getPrice().toString());
 
         return invoice;

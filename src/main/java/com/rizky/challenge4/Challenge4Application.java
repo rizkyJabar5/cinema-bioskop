@@ -2,7 +2,6 @@ package com.rizky.challenge4;
 
 import com.rizky.challenge4.backend.model.dto.FilmDto;
 import com.rizky.challenge4.backend.model.dto.UserDto;
-import com.rizky.challenge4.backend.repository.SchedulesRepository;
 import com.rizky.challenge4.backend.repository.SeatsRepository;
 import com.rizky.challenge4.backend.service.FilmService;
 import com.rizky.challenge4.backend.service.UserService;
@@ -21,7 +20,7 @@ public class Challenge4Application {
     }
 
     @Bean
-    CommandLineRunner run(UserService userService, FilmService service, SchedulesRepository schedules, SeatsRepository seatsRepository) {
+    CommandLineRunner createData(UserService userService, FilmService service, SeatsRepository seatsRepository) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             logger.info("Generating existing data");
@@ -43,8 +42,6 @@ public class Challenge4Application {
             service.addFilm(new FilmDto("KMLSKD" ,"Katanya Mau Lulus? Skripsi Kok Dianggurin", "Salah Satu pernyataan paling nyelekit", false));
             service.addFilm(new FilmDto("PCAB" ,"Pocong Absurd", "Ini film horor ya?", true));
             service.addFilm(new FilmDto("KTLK" ,"Kuntilanak", "film horor ya?", true));
-
-//            service.addSchedule(new ScheduleDto(, , , 45000), "MPN");
 
         };
     }

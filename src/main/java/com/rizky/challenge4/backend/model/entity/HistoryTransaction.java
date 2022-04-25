@@ -21,8 +21,8 @@ public class HistoryTransaction extends AbstractEntity {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "seats_id", referencedColumnName = "seats_id"),
-            @JoinColumn(name = "seats_number", referencedColumnName = "seats_number")
+            @JoinColumn(name = "seats_number", referencedColumnName = "seats_number"),
+            @JoinColumn(name = "seats_row", referencedColumnName = "seats_row")
     })
     private Seats seats;
 

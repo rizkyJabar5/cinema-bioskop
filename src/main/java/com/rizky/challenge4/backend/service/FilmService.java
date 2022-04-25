@@ -1,16 +1,13 @@
 package com.rizky.challenge4.backend.service;
 
 import com.rizky.challenge4.backend.model.dto.FilmDto;
-import com.rizky.challenge4.backend.model.dto.ScheduleDto;
 import com.rizky.challenge4.backend.model.entity.Films;
 
-import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 public interface FilmService {
 
-    Films addFilm(FilmDto dto);
+    void addFilm(FilmDto dto);
 
     void addManyFilms(List<Films> film);
 
@@ -26,9 +23,4 @@ public interface FilmService {
 
     List<Films> findFilmByOnShow();
 
-    Optional<ScheduleDto> showFilmOnSchedule(Long id);
-
-    List<ScheduleDto> showAllSchedule();
-
-    void addSchedule(ScheduleDto schedules, FilmDto filmDto) throws ParseException;
 }

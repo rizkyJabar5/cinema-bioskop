@@ -1,28 +1,32 @@
 package com.rizky.challenge4.backend.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rizky.challenge4.backend.model.entity.Films;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
+
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 @Setter
 @Getter
 @NoArgsConstructor
 public class ScheduleDto {
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMMM-yyyy");
-    private static final SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm");
-
     private Long schedulesId;
+    @JsonFormat(shape = STRING, pattern = "dd-MM-yyyy", timezone = "Asia/Jakarta")
     private Date showDate;
+    @JsonFormat(pattern = "HH:mm", timezone = "Asia/Jakarta")
     private Date startTime;
+    @JsonFormat(pattern = "HH:mm", timezone = "Asia/Jakarta")
     private Date endTime;
     private Float price;
-    private String codeTitleFilm;
+        private Films film;
+
+    private String titleFilm;
+
     private String onShow;
 
     public ScheduleDto(Date showDate, Date startTime, Date endTime, Float price) {
@@ -32,32 +36,17 @@ public class ScheduleDto {
         this.price = price;
     }
 
-    public Date getDateConverted(String timezone) throws ParseException {
-        dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-        return dateFormat.parse(String.valueOf(this.showDate));
-    }
-
-    public Date getStartTimeConverted(String timezone) throws ParseException {
-        dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-        return timeFormat.parse(String.valueOf(this.startTime));
-    }
-
-    public Date getEndTimeConverted(String timezone) throws ParseException {
-        dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-        return timeFormat.parse(String.valueOf(this.startTime));
-    }
-
     @Override
     public String toString() {
-        return "ScheduleFilmDTO{" +
-                "schedulesID=" + schedulesId +
-                ", showDate=" + showDate +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
+        return "ScheduleDto{" +
+                "schedulesId=" + schedulesId +
+                ", showDate='" + showDate + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 ", price=" + price +
-                ", codeTitleFilm='" + codeTitleFilm + '\'' +
-                ", onShow='" + onShow + '\'' +
+                ", film=" + film +
                 '}';
     }
+
 }
 

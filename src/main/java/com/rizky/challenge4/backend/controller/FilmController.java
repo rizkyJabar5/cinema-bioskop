@@ -1,8 +1,6 @@
 package com.rizky.challenge4.backend.controller;
 
-import com.rizky.challenge4.backend.error.NotFoundExceptions;
 import com.rizky.challenge4.backend.model.dto.FilmDto;
-import com.rizky.challenge4.backend.model.dto.ScheduleDto;
 import com.rizky.challenge4.backend.model.entity.Films;
 import com.rizky.challenge4.backend.service.FilmService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,10 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.List;
 
-@Tag(name = "Films Controller", description = "API for handling transaction Film and Schedule CRUD operation entity in the Cinematic database.")
+@Tag(name = "Films Controller", description = "API for handling transaction Film CRUD operation entity in the Cinematic database.")
 @RestController
 @RequestMapping("/api/v1/films")
 public class FilmController {
@@ -167,43 +164,4 @@ public class FilmController {
 
     }
 
-    //    ----------------Schedule----------------
-    @Operation(summary = "Get or search the data by id from the entity.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "203", description = "Get schedule by id ")
-    })
-    @GetMapping("/schedule/{id}")
-    public ResponseEntity<ScheduleDto> getScheduleFilm(
-            @PathVariable("id") Long id) {
-        return ResponseEntity.status(203)
-                .body(filmService.showFilmOnSchedule(id)
-                        .orElseThrow(() -> new NotFoundExceptions("Schedule with id " + id + " not found")));
-    }
-
-    @Operation(summary = "Get or search all entity data of field from the database.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "203", description = "Get all Schedule store on the database")
-    })
-    @GetMapping("/list-schedules")
-    public ResponseEntity<List<ScheduleDto>> showAllSchedule() {
-        return ResponseEntity.status(203).body(filmService.showAllSchedule());
-    }
-
-    @Operation(summary = "This method function to add schedule if film is present on the database.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Add film to store the database ",
-                    content = {@Content(
-                            schema = @Schema(implementation = ScheduleDto.class),
-                            mediaType = "application/json")})})
-    @PostMapping("/schedule/new")
-    public ResponseEntity<String> addNewSchedule(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Created schedule object",
-                    content = @Content(
-                            schema = @Schema(implementation = ScheduleDto.class)
-                    ))
-
-            @RequestBody ScheduleDto sch, FilmDto film) throws ParseException {
-        filmService.addSchedule(sch, film);
-        return ResponseEntity.ok().body(sch.toString());
-    }
 }

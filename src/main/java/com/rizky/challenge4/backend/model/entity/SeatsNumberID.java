@@ -1,5 +1,6 @@
 package com.rizky.challenge4.backend.model.entity;
 
+import com.rizky.challenge4.backend.model.SeatsRowEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,15 +20,15 @@ public class SeatsNumberID implements Serializable {
 
     private static final long serialVersionUID = 1292590841743792211L;
 
-    @Column(name = "seats_id")
-    private Long seatsID;
-
     @Column(name = "seats_number")
-    private Integer seatsNumber;
+    private Long seatsNumber;
+
+    @Column(name = "seats_row")
+    private SeatsRowEnum seatsRow;
 
     @Override
     public int hashCode() {
-        return Objects.hash(seatsID, seatsNumber);
+        return Objects.hash(seatsNumber, seatsRow);
     }
 
     @Override
@@ -35,14 +36,14 @@ public class SeatsNumberID implements Serializable {
         if(this == obj) return true;
         if(obj == null || getClass() != obj.getClass()) return false;
         SeatsNumberID seatsNumberID = (SeatsNumberID) obj;
-        return seatsID.equals(seatsNumberID.seatsID) && seatsNumber.equals(seatsNumberID.seatsNumber);
+        return seatsNumber.equals(seatsNumberID.seatsNumber) && seatsRow.equals(seatsNumberID.seatsRow);
     }
 
     @Override
     public String toString() {
         return "SeatsNumberID{" +
-                "seatsID=" + seatsID +
-                ", seatsNumber=" + seatsNumber +
+                "seatsNumber=" + seatsNumber +
+                ", seatsRow=" + seatsRow +
                 '}';
     }
 }

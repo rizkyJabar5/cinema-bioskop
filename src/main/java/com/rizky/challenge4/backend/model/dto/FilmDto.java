@@ -3,15 +3,16 @@ package com.rizky.challenge4.backend.model.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class FilmDto {
 
-
-    @JsonProperty(value = "filmId", defaultValue = "1")
+    @JsonProperty(value = "filmId")
     private Long filmId;
 
     @JsonProperty(value = "codeFilm")
