@@ -1,5 +1,6 @@
 package com.rizky.challenge4.backend.model.entity;
 
+import com.rizky.challenge4.backend.model.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +14,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "seats")
-public class Seats {
+public class Seats extends AbstractEntity {
 
-    @EmbeddedId
-    @AttributeOverride(name = "seatsNumber", column = @Column(name = "seats_number"))
-    @AttributeOverride(name = "seatsRow", column = @Column(name = "seats_row"))
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "seatsNumber", column = @Column(name = "seats_number")),
+            @AttributeOverride(name = "seatsRow", column = @Column(name = "seats_row"))
+    })
     private SeatsNumberID seatsNumberId;
 
     private boolean available;
 
+    public Seats(SeatsNumberID seatsNumber) {
+        this.seatsNumberId = seatsNumber;
+    }
 }

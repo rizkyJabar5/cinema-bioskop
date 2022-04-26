@@ -23,17 +23,18 @@ public class ScheduleDto {
     @JsonFormat(pattern = "HH:mm", timezone = "Asia/Jakarta")
     private Date endTime;
     private Float price;
-        private Films film;
+    private Films film;
 
     private String titleFilm;
 
     private String onShow;
 
-    public ScheduleDto(Date showDate, Date startTime, Date endTime, Float price) {
+    public ScheduleDto(Date showDate, Date startTime, Date endTime, Float price, Films film) {
         this.showDate = showDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
+        this.film = film;
     }
 
     @Override

@@ -2,9 +2,11 @@ package com.rizky.challenge4.backend.controller;
 
 import com.rizky.challenge4.backend.model.entity.Films;
 import com.rizky.challenge4.backend.model.entity.Schedules;
+import com.rizky.challenge4.backend.model.entity.Seats;
 import com.rizky.challenge4.backend.model.entity.Users;
 import com.rizky.challenge4.backend.service.FilmService;
 import com.rizky.challenge4.backend.service.ScheduleService;
+import com.rizky.challenge4.backend.service.SeatService;
 import com.rizky.challenge4.backend.service.UserService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -23,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.rizky.challenge4.backend.model.SeatsRowEnum.A;
+
 @RestController
 @RequestMapping("/api/v1/invoice")
 public class InvoiceController {
@@ -30,12 +34,14 @@ public class InvoiceController {
     private final UserService userService;
     private final FilmService filmService;
     private final ScheduleService scheduleService;
+    private final SeatService seatService;
 
     @Autowired
-    public InvoiceController(UserService userService, FilmService filmService, ScheduleService scheduleService) {
+    public InvoiceController(UserService userService, FilmService filmService, ScheduleService scheduleService, SeatService seatService) {
         this.userService = userService;
         this.filmService = filmService;
         this.scheduleService = scheduleService;
+        this.seatService = seatService;
     }
 
 
@@ -56,7 +62,9 @@ public class InvoiceController {
         data.put("scheduleTime", schedules.getStartTime().toString());
         data.put("scheduleDate", schedules.getShowDate().toString());
         data.put("getPrice", schedules.getPrice().toString());
-//        Seats seats =
+        Seats seats = seatService.findSeatsBySeatsNumberId(1L, A);
+        data.put("seatsNumber", seats.getSeatsNumberId().getSeatsNumber().toString());
+        data.put("seatsOrdered", seats.getSeatsNumberId().getSeatsRow().toString());
         dataList.add(data);
 
 //        parameter fill report
