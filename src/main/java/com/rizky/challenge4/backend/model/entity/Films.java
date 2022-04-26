@@ -31,6 +31,13 @@ public class Films {
     @Column(name = "on_show")
     private boolean onShow;
 
+    public Films(String codeFilm, String title, String description, boolean onShow) {
+        this.codeFilm = codeFilm;
+        this.title = title;
+        this.description = description;
+        this.onShow = onShow;
+    }
+
     @Override
     public String toString() {
         return "Films{" +

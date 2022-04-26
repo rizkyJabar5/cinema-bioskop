@@ -33,7 +33,7 @@ public class ScheduleController {
     public ResponseEntity<ScheduleDto> getScheduleFilm(
             @PathVariable("id") Long id) {
         return ResponseEntity.status(203)
-                .body(service.showFilmOnSchedule(id)
+                .body(service.findFilmOnSchedule(id)
                         .orElseThrow(() -> new NotFoundExceptions("Schedule with id " + id + " not found")));
     }
 
@@ -44,7 +44,7 @@ public class ScheduleController {
     })
     @GetMapping("/showall")
     public ResponseEntity<List<ScheduleDto>> showAllSchedule() {
-        return ResponseEntity.status(203).body(service.showAllSchedule());
+        return ResponseEntity.status(203).body(service.findAllSchedule());
     }
 
     //    ---------POST MAPPING----------------

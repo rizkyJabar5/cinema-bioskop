@@ -20,4 +20,6 @@ public class Seats {
     @AttributeOverride(name = "seatsRow", column = @Column(name = "seats_row"))
     private SeatsNumberID seatsNumberId;
 
+    private boolean available;
+
 }

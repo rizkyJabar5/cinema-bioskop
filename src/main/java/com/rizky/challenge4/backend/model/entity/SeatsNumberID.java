@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -24,6 +26,7 @@ public class SeatsNumberID implements Serializable {
     private Long seatsNumber;
 
     @Column(name = "seats_row")
+    @Enumerated(EnumType.STRING)
     private SeatsRowEnum seatsRow;
 
     @Override
