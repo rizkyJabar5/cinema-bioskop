@@ -1,6 +1,6 @@
 package com.rizky.challenge4.backend.model.entity;
 
-import com.rizky.challenge4.backend.model.SeatsRowEnum;
+import com.rizky.challenge4.backend.model.enums.SeatsRowEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

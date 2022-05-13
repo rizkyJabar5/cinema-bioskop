@@ -1,4 +1,4 @@
-package com.rizky.challenge4.backend.error;
+package com.rizky.challenge4.backend.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

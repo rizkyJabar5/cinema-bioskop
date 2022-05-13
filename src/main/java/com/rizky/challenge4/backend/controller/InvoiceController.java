@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.rizky.challenge4.backend.model.SeatsRowEnum.A;
+import static com.rizky.challenge4.backend.model.enums.SeatsRowEnum.A;
 
 @RestController
 @RequestMapping("/api/v1/invoice")

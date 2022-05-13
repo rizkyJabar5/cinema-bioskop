@@ -1,6 +1,6 @@
 package com.rizky.challenge4.backend.service.impl;
 
-import com.rizky.challenge4.backend.error.NotFoundExceptions;
+import com.rizky.challenge4.backend.exceptions.NotFoundExceptions;
 import com.rizky.challenge4.backend.model.dto.FilmDto;
 import com.rizky.challenge4.backend.model.entity.Films;
 import com.rizky.challenge4.backend.model.mapper.FilmDtoToModel;

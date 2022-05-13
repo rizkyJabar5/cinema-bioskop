@@ -3,7 +3,7 @@ package com.rizky.challenge4.backend.service.impl;
 import com.rizky.challenge4.backend.model.dto.UserDto;
 import com.rizky.challenge4.backend.model.entity.Users;
 import com.rizky.challenge4.backend.model.mapper.UserConvertToDto;
-import com.rizky.challenge4.backend.error.NotFoundExceptions;
+import com.rizky.challenge4.backend.exceptions.NotFoundExceptions;
 import com.rizky.challenge4.backend.repository.UsersRepository;
 import com.rizky.challenge4.backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.rizky.challenge4.backend.service.impl;
 
-import com.rizky.challenge4.backend.model.SeatsRowEnum;
+import com.rizky.challenge4.backend.model.enums.SeatsRowEnum;
 import com.rizky.challenge4.backend.model.dto.SeatsDto;
 import com.rizky.challenge4.backend.model.entity.Seats;
 import com.rizky.challenge4.backend.model.mapper.SeatsConvert;

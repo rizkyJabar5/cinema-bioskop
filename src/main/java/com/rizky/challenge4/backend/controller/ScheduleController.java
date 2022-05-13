@@ -1,6 +1,6 @@
 package com.rizky.challenge4.backend.controller;
 
-import com.rizky.challenge4.backend.error.NotFoundExceptions;
+import com.rizky.challenge4.backend.exceptions.NotFoundExceptions;
 import com.rizky.challenge4.backend.model.dto.ScheduleDto;
 import com.rizky.challenge4.backend.service.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
