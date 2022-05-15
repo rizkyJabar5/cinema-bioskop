@@ -38,28 +38,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(encoderConfig.passwordEncoder());
     }
 
-//    --------------HTTP SECURITY-----------
+    //    --------------HTTP SECURITY-----------
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and()
-                    .csrf().disable()
+                .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                    .antMatchers("/api/auth/**").permitAll()
-                    .antMatchers("/api/v1/films/add/**").hasAuthority(ERole.ADMIN.name())
-                    .antMatchers("/api/v1/films/del/**").hasAuthority(ERole.ADMIN.name())
-                    .antMatchers("/api/v1/films/update/**").hasAuthority(ERole.ADMIN.name())
-                    .antMatchers("/api/v1/schedules/add/**").hasAuthority(ERole.ADMIN.name())
-                    .antMatchers("/api/v1/users/add/**").hasAuthority(ERole.ADMIN.name())
-                    .antMatchers("/api/v1/users/search/**").hasAuthority(ERole.CUSTOMER.name())
-                    .antMatchers("/api/v1/films/search/**").hasAuthority(ERole.CUSTOMER.name())
-                    .antMatchers("/api/v1/invoice/**").hasAuthority(ERole.CUSTOMER.name())
-                    .antMatchers("/api/v1/schedules/search/**").hasAuthority(ERole.CUSTOMER.name())
-                    .antMatchers("/api/v1/seats/**").hasAuthority(ERole.CUSTOMER.name())
-                    .antMatchers("/api/v1/seats/**").hasAnyAuthority(ERole.ADMIN.name(), ERole.CUSTOMER.name())
-                    .antMatchers("/api/v1/invoice/**").hasAnyAuthority(ERole.ADMIN.name(), ERole.CUSTOMER.name())
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/v1/films/admin/**").hasAuthority(ERole.ADMIN.name())
+                .antMatchers("/api/v1/schedules/add/**").hasAuthority(ERole.ADMIN.name())
+                .antMatchers("/api/v1/users/admin/**").hasAuthority(ERole.ADMIN.name())
+
+                .antMatchers("/api/v1/schedules/public/**").hasAnyAuthority(ERole.CUSTOMER.name(), ERole.ADMIN.name())
+                .antMatchers("/api/v1/users/public/**").hasAnyAuthority(ERole.CUSTOMER.name(), ERole.ADMIN.name())
+                .antMatchers("/api/v1/films/public/**").hasAnyAuthority(ERole.CUSTOMER.name(), ERole.ADMIN.name())
+
+                .antMatchers("/api/v1/seats/**").hasAnyAuthority(ERole.ADMIN.name(), ERole.CUSTOMER.name())
+                .antMatchers("/api/v1/invoice/**").hasAnyAuthority(ERole.ADMIN.name(), ERole.CUSTOMER.name())
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -67,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 

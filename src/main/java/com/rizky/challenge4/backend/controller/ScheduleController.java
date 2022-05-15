@@ -29,7 +29,7 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "203", description = "Get schedule by id ")
     })
-    @GetMapping("/search/{id}")
+    @GetMapping("/public/search/{id}")
     public ResponseEntity<ScheduleDto> getScheduleFilm(
             @PathVariable("id") Long id) {
         return ResponseEntity.status(203)
@@ -42,7 +42,7 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "203", description = "Get all Schedule store on the database")
     })
-    @GetMapping("/search/showall")
+    @GetMapping("/public/search/showall")
     public ResponseEntity<List<ScheduleDto>> showAllSchedule() {
         return ResponseEntity.status(203).body(service.findAllSchedule());
     }
