@@ -36,7 +36,7 @@ public class FilmController {
                                     "description:Malaikat yang sering ditakuti oleh kebanyakan manusia," +
                                     "onShow:true" +
                                     '}'))})})
-    @PostMapping("/add")
+    @PostMapping("/admin/add")
     public ResponseEntity<String> addFilm(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Created film object", required = true)// Swagger Custom response body
@@ -57,7 +57,7 @@ public class FilmController {
                                     "description:Malaikat yang sering ditakuti oleh kebanyakan manusia," +
                                     "onShow:true" +
                                     '}'))})})
-    @PostMapping("/add/many-films")
+    @PostMapping("/admin/add-many-films")
     public ResponseEntity<String> addManyFilms(@RequestBody List<Films> film) {
         filmService.addManyFilms(film);
         return ResponseEntity.status(201).body(film.toString());
@@ -84,7 +84,7 @@ public class FilmController {
                             '}'))
                     })
     })
-    @GetMapping("/search/showall")
+    @GetMapping("/public/search/showall")
     public ResponseEntity<List<Films>> getAllFilms() {
         return ResponseEntity.status(202).body(filmService.findAllFilms());
     }
@@ -103,7 +103,7 @@ public class FilmController {
                                     '}'))
                     })
     })
-    @GetMapping("/search/{id}")
+    @GetMapping("/public/search/{id}")
     public ResponseEntity<Films> getFilmById(
             @Parameter(description = "add id for get the film")
             @PathVariable("id") long id) {
@@ -124,7 +124,7 @@ public class FilmController {
                                     '}'))
                     })
     })
-    @GetMapping("/search/onshow")
+    @GetMapping("/public/search/onshow")
     public ResponseEntity<List<Films>> getFilmOnShow() {
         return ResponseEntity.status(202).body(filmService.findFilmByOnShow());
     }
@@ -143,7 +143,7 @@ public class FilmController {
                                     '}'))
                     })
     })
-    @PutMapping("/update")
+    @PutMapping("/admin/update")
     public ResponseEntity<Films> updateFilmID(@RequestBody Films film) {
         return ResponseEntity.ok().body(filmService.updateFilm(film));
     }
@@ -155,7 +155,7 @@ public class FilmController {
                             schema = @Schema(example = "Delete film id 1 has successfully."))
                     })
     })
-    @DeleteMapping("/del/{id}")
+    @DeleteMapping("/admin/del/{id}")
     public ResponseEntity<String> deleteFilmById(
             @Parameter(description = "add id for delete the film")
             @PathVariable("id") long id) {

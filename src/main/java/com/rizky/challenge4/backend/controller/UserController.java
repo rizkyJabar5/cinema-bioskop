@@ -38,7 +38,7 @@ public class UserController {
                                     "password:manusia, " +
                                     "address: Surabaya" +
                                     '}'))})})
-    @PostMapping("/add")
+    @PostMapping("/admin/add")
     public ResponseEntity<String> addUser(@RequestBody UserDto user) {
         userService.addUser(user);
         return ResponseEntity.status(201).body(user.toString());
