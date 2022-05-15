@@ -1,4 +1,4 @@
-package com.rizky.challenge4.app.filter;
+package com.rizky.challenge4.app.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +9,9 @@ import java.util.List;
 @Setter
 public class JwtResponse {
 
-    private String token;
     private String type = "Bearer";
     private Long id;
+    private String token;
     private String username;
     private String email;
     private List<String> roles;

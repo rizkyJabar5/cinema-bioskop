@@ -1,5 +1,7 @@
-package com.rizky.challenge4.app.filter;
+package com.rizky.challenge4.app.security.filter;
 
+
+import com.rizky.challenge4.app.HasLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,13 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthTokenFilter extends OncePerRequestFilter {
 
-
-    private JwtUtils jwtUtils;
+public class AuthTokenFilter extends OncePerRequestFilter implements HasLogger {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

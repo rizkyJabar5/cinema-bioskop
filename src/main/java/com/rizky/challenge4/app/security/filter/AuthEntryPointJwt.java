@@ -1,4 +1,4 @@
-package com.rizky.challenge4.app.filter;
+package com.rizky.challenge4.app.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rizky.challenge4.app.HasLogger;

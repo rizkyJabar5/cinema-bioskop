@@ -1,15 +1,17 @@
 package com.rizky.challenge4.backend.controller;
 
 
-import com.rizky.challenge4.app.filter.JwtResponse;
-import com.rizky.challenge4.app.filter.JwtUtils;
-import com.rizky.challenge4.app.filter.MessageResponse;
+import com.rizky.challenge4.app.payload.request.SignupRequest;
+import com.rizky.challenge4.app.payload.response.JwtResponse;
+import com.rizky.challenge4.app.payload.response.MessageResponse;
+import com.rizky.challenge4.app.security.EncoderConfig;
+import com.rizky.challenge4.app.security.filter.JwtUtils;
+import com.rizky.challenge4.app.security.service.UserDetailsImpl;
 import com.rizky.challenge4.backend.model.entity.Roles;
 import com.rizky.challenge4.backend.model.entity.Users;
 import com.rizky.challenge4.backend.model.enums.ERole;
 import com.rizky.challenge4.backend.repository.RolesRepository;
 import com.rizky.challenge4.backend.repository.UsersRepository;
-import com.rizky.challenge4.backend.request.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +19,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,30 +42,41 @@ public class AuthController {
     RolesRepository roleRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    EncoderConfig encoderConfig;
 
     @Autowired
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody Map<String, Object> login) {
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(login.get("username"), login.get("password"))
+                new UsernamePasswordAuthenticationToken(
+                        login.get("username"),
+                        login.get("password"))
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        Users userDetails = (Users) authentication.getPrincipal();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+        return ResponseEntity.ok(
+                new JwtResponse(
+                        jwt,
+                        userDetails.getId(),
+                        userDetails.getUsername(),
+                        userDetails.getEmail(),
+                        roles)
+        );
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
+
         if(usersRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity.badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
@@ -75,8 +87,10 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
-        Users users = new Users(signupRequest.getUsername(), signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()));
+        Users users = new Users(
+                signupRequest.getUsername(),
+                signupRequest.getEmail(),
+                encoderConfig.passwordEncoder().encode(signupRequest.getPassword()));
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Roles> roles = new HashSet<>();
@@ -88,7 +102,7 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 Roles roles1 = roleRepository.findByRoleName(ERole.valueOf(role))
-                        .orElseThrow(() -> new RuntimeException("Error: Role " + role + " is not found"));
+                        .orElseThrow(() -> new RuntimeException("Error: Role " + role + "  is not found"));
                 roles.add(roles1);
             });
         }

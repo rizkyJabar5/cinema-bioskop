@@ -18,9 +18,7 @@ public class SeatsDto {
     private Long seatsNumber;
     private SeatsRowEnum seatsRow;
 
-    public SeatsDto(SeatsNumberID seatsId, boolean available) {
-        this.id = id;
+    public SeatsDto(SeatsNumberID seatsId) {
         this.seatsId = seatsId;
-        this.available = available;
     }
 }

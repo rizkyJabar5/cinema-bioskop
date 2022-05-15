@@ -1,4 +1,4 @@
-package com.rizky.challenge4.backend.request;
+package com.rizky.challenge4.app.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Setter
 @Getter
-
 public class SignupRequest {
 
     @NotBlank

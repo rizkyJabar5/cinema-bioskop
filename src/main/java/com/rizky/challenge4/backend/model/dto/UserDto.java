@@ -1,13 +1,18 @@
 package com.rizky.challenge4.backend.model.dto;
 
 
+import com.rizky.challenge4.backend.model.entity.Roles;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
 
     private Long userId;
@@ -16,11 +21,18 @@ public class UserDto {
     private String password;
     private String address;
 
-    public UserDto(String username, String email, String password, String address) {
+    private Set<Roles> roles;
+
+    public UserDto(String username,
+                   String email,
+                   String password,
+                   String address,
+                   Set<Roles> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.address = address;
+        this.roles = roles;
     }
 
     @Override

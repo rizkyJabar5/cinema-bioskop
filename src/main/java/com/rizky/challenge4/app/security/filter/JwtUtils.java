@@ -1,36 +1,36 @@
-package com.rizky.challenge4.app.filter;
+package com.rizky.challenge4.app.security.filter;
 
 import com.rizky.challenge4.app.HasLogger;
-import com.rizky.challenge4.backend.model.entity.Users;
+import com.rizky.challenge4.app.security.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
-
+@Component
 public class JwtUtils implements HasLogger {
-
 
     @Value("${jwtSecret}")
     private String jwtSecret;
 
-    @Value("${jwtExpirationMs}")
-    private String jwtExpirationMs;
-
     public String generateJwtToken(Authentication auth) {
 
-        Users userPrincipal = (Users) auth.getPrincipal();
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) auth.getPrincipal();
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
     public String getUsernameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token).getBody()
+                .getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {

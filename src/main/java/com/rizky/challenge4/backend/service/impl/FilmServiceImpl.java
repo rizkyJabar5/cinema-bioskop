@@ -1,21 +1,20 @@
 package com.rizky.challenge4.backend.service.impl;
 
+import com.rizky.challenge4.app.HasLogger;
 import com.rizky.challenge4.backend.exceptions.NotFoundExceptions;
 import com.rizky.challenge4.backend.model.dto.FilmDto;
 import com.rizky.challenge4.backend.model.entity.Films;
 import com.rizky.challenge4.backend.model.mapper.FilmDtoToModel;
 import com.rizky.challenge4.backend.repository.FilmRepository;
 import com.rizky.challenge4.backend.service.FilmService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
-@Slf4j
 @Service
-public class FilmServiceImpl implements FilmService {
+public class FilmServiceImpl implements FilmService, HasLogger {
 
     private final FilmRepository filmRepository;
     private final FilmDtoToModel convertToModel;
@@ -28,19 +27,25 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void addFilm(FilmDto dto) {
-        log.info("Film {} has been successfully saved to the database", dto.getTitle());
-        filmRepository.save(convertToModel.createToModel(dto));
+
+        Films existingFilm = filmRepository.findFilmsByCodeFilm(dto.getCodeFilm());
+
+        if (existingFilm == null) {
+            getLogger().info("Film {} has been successfully saved to the database", dto.getTitle());
+            filmRepository.save(convertToModel.createToModel(dto));
+        }
+
     }
 
     @Override
     public void addManyFilms(List<Films> film) {
-        log.info("Films has been successfully saved to the database");
+        getLogger().info("Films has been successfully saved to the database");
         filmRepository.saveAll(film);
     }
 
     @Override
     public Films updateFilm(Films film) {
-        log.info("Film {} has been successfully to update", film.getTitle());
+        getLogger().info("Film {} has been successfully to update", film.getTitle());
         Films updateFilm = filmRepository.findById(film.getFilmID())
                 .orElseThrow(() -> new NotFoundExceptions("Film not found"));
         Objects.requireNonNull(updateFilm).setTitle(film.getTitle());

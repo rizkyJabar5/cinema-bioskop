@@ -1,54 +1,66 @@
 package com.rizky.challenge4.backend.service.impl;
 
+import com.rizky.challenge4.app.HasLogger;
+import com.rizky.challenge4.app.security.EncoderConfig;
+import com.rizky.challenge4.backend.exceptions.NotFoundExceptions;
 import com.rizky.challenge4.backend.model.dto.UserDto;
 import com.rizky.challenge4.backend.model.entity.Users;
-import com.rizky.challenge4.backend.model.mapper.UserConvertToDto;
-import com.rizky.challenge4.backend.exceptions.NotFoundExceptions;
+import com.rizky.challenge4.backend.model.mapper.CreateUserAccount;
 import com.rizky.challenge4.backend.repository.UsersRepository;
 import com.rizky.challenge4.backend.service.UserService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
+
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, HasLogger {
 
-    @Autowired
-    private UsersRepository userRepository;
 
-    @Autowired
-    private UserConvertToDto userConvertToDto;
+    private final UsersRepository userRepository;
+
+
+    private final CreateUserAccount createUserAccount;
+
+
+    private final EncoderConfig encoderConfig;
+
+    public UserServiceImpl(UsersRepository userRepository,
+                           CreateUserAccount createUserAccount,
+                           EncoderConfig encoderConfig) {
+        this.userRepository = userRepository;
+        this.createUserAccount = createUserAccount;
+        this.encoderConfig = encoderConfig;
+    }
 
     @Override
     public void addUser(UserDto user) {
-        Users users = new Users();
-        users.setUsername(user.getUsername());
-        users.setEmail(user.getEmail());
-        users.setPassword(user.getPassword());
-        users.setAddress(user.getAddress());
-        log.info("User {} telah berhasil ditambahkan", users.getUsername());
-        userRepository.save(users);
+
+            getLogger().info("User {} telah berhasil ditambahkan", user.getUsername());
+            userRepository.save(createUserAccount.createUser(user));
+
     }
 
     @Override
     public void addUsers(List<Users> user) {
-        log.info("users has been successfully saved to the database");
+        getLogger().info("users has been successfully saved to the database");
+
         userRepository.saveAll(user);
     }
 
     @Override
     public Users updateUser(Users user) {
-        log.info("User {} has been successfully to update", user.getUsername());
+
+        getLogger().info("User {} has been successfully to update", user.getUsername());
         Users userUpdate = userRepository.findById(user.getId())
                 .orElseThrow(() -> new NotFoundExceptions("User not found"));
         userUpdate.setUsername(user.getUsername());
         userUpdate.setEmail(user.getEmail());
-        userUpdate.setPassword(user.getPassword());
+        userUpdate.setPassword(encoderConfig.passwordEncoder().encode(user.getPassword()));
         userUpdate.setAddress(user.getAddress());
+
         return userRepository.save(userUpdate);
     }
 
@@ -61,7 +73,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
     }
 
     @Override
@@ -71,10 +84,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAllUsers() {
-        log.info("User loaded successfully");
+        getLogger().info("User loaded successfully");
         return userRepository.findAll()
                 .stream()
-                .map(userConvertToDto::convertEntityToDto)
+                .map(createUserAccount::convertEntityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -82,5 +95,6 @@ public class UserServiceImpl implements UserService {
     public Users findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
 
 }
