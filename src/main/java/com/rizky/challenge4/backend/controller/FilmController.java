@@ -57,7 +57,7 @@ public class FilmController {
                                     "description:Malaikat yang sering ditakuti oleh kebanyakan manusia," +
                                     "onShow:true" +
                                     '}'))})})
-    @PostMapping("/add-films")
+    @PostMapping("/add/many-films")
     public ResponseEntity<String> addManyFilms(@RequestBody List<Films> film) {
         filmService.addManyFilms(film);
         return ResponseEntity.status(201).body(film.toString());
@@ -84,7 +84,7 @@ public class FilmController {
                             '}'))
                     })
     })
-    @GetMapping("/showall")
+    @GetMapping("/search/showall")
     public ResponseEntity<List<Films>> getAllFilms() {
         return ResponseEntity.status(202).body(filmService.findAllFilms());
     }
@@ -103,7 +103,7 @@ public class FilmController {
                                     '}'))
                     })
     })
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<Films> getFilmById(
             @Parameter(description = "add id for get the film")
             @PathVariable("id") long id) {
@@ -124,7 +124,7 @@ public class FilmController {
                                     '}'))
                     })
     })
-    @GetMapping("/onshow")
+    @GetMapping("/search/onshow")
     public ResponseEntity<List<Films>> getFilmOnShow() {
         return ResponseEntity.status(202).body(filmService.findFilmByOnShow());
     }

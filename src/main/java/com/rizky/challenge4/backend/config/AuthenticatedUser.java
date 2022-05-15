@@ -22,7 +22,7 @@ public class AuthenticatedUser implements HasLogger {
                 Roles role = repository.findByRoleName(eRole)
                         .orElseThrow(() -> new RuntimeException("Roles not found"));
             } catch(RuntimeException e){
-                getLogger().info("Role " + eRole.name() + "is not found. Please create one...");
+                getLogger().info("Role " + eRole.name() + " is not found. Please create one...");
                 Roles roleName = new Roles();
                 roleName.setRoleName(eRole);
                 repository.save(roleName);

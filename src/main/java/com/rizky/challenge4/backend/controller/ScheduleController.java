@@ -29,7 +29,7 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "203", description = "Get schedule by id ")
     })
-    @GetMapping("/schedule/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<ScheduleDto> getScheduleFilm(
             @PathVariable("id") Long id) {
         return ResponseEntity.status(203)
@@ -42,7 +42,7 @@ public class ScheduleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "203", description = "Get all Schedule store on the database")
     })
-    @GetMapping("/showall")
+    @GetMapping("/search/showall")
     public ResponseEntity<List<ScheduleDto>> showAllSchedule() {
         return ResponseEntity.status(203).body(service.findAllSchedule());
     }
@@ -54,7 +54,7 @@ public class ScheduleController {
                     content = {@Content(
                             schema = @Schema(implementation = ScheduleDto.class),
                             mediaType = "application/json")})})
-    @PostMapping("/new")
+    @PostMapping("/add")
     public ResponseEntity<String> addNewSchedule(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Created schedule object",
                     content = @Content(

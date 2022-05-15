@@ -48,10 +48,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                     .antMatchers("/api/auth/**").permitAll()
-                    .antMatchers("/api/test/**").permitAll()
-                    .antMatchers("/users/admin/**").hasAuthority(ERole.ADMIN.name())
-                    .antMatchers("/users/customer/**").hasAuthority(ERole.CUSTOMER.name())
-                    .antMatchers("/users/public/**").hasAnyAuthority(ERole.ADMIN.name(), ERole.CUSTOMER.name())
+                    .antMatchers("/api/v1/films/add/**").hasAuthority(ERole.ADMIN.name())
+                    .antMatchers("/api/v1/films/del/**").hasAuthority(ERole.ADMIN.name())
+                    .antMatchers("/api/v1/films/update/**").hasAuthority(ERole.ADMIN.name())
+                    .antMatchers("/api/v1/schedules/add/**").hasAuthority(ERole.ADMIN.name())
+                    .antMatchers("/api/v1/users/add/**").hasAuthority(ERole.ADMIN.name())
+                    .antMatchers("/api/v1/users/search/**").hasAuthority(ERole.CUSTOMER.name())
+                    .antMatchers("/api/v1/films/search/**").hasAuthority(ERole.CUSTOMER.name())
+                    .antMatchers("/api/v1/invoice/**").hasAuthority(ERole.CUSTOMER.name())
+                    .antMatchers("/api/v1/schedules/search/**").hasAuthority(ERole.CUSTOMER.name())
+                    .antMatchers("/api/v1/seats/**").hasAuthority(ERole.CUSTOMER.name())
+                    .antMatchers("/api/v1/seats/**").hasAnyAuthority(ERole.ADMIN.name(), ERole.CUSTOMER.name())
+                    .antMatchers("/api/v1/invoice/**").hasAnyAuthority(ERole.ADMIN.name(), ERole.CUSTOMER.name())
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

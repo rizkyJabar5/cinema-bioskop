@@ -21,7 +21,7 @@ public class JwtUtils implements HasLogger {
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 864000000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

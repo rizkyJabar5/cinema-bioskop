@@ -38,7 +38,7 @@ public class UserController {
                                     "password:manusia, " +
                                     "address: Surabaya" +
                                     '}'))})})
-    @PostMapping("/add-user")
+    @PostMapping("/add")
     public ResponseEntity<String> addUser(@RequestBody UserDto user) {
         userService.addUser(user);
         return ResponseEntity.status(201).body(user.toString());
@@ -56,7 +56,7 @@ public class UserController {
                                     "password:manusia, " +
                                     "address: Surabaya" +
                                     '}'))})})
-    @PostMapping("/add-users")
+    @PostMapping("/add/many-users")
     public ResponseEntity<String> addUsers(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Created user object", required = true)
 // Swagger Custom response body
@@ -85,7 +85,7 @@ public class UserController {
                                     "}]"))
                     })
     })
-    @GetMapping("/showall")
+    @GetMapping("/search/showall")
     public ResponseEntity<List<UserDto>> showAllUsers() {
         return ResponseEntity.status(202).body(userService.findAllUsers());
     }
@@ -99,7 +99,7 @@ public class UserController {
                                     example = "{id= 1, username:rizky, email:rizky@email.com, password:manusia, address: Surabaya}"))
                     })
     })
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<Users> showUsersById(
             @Parameter(description = "add id for get the user")
             @PathVariable("id") Long id) {
@@ -132,7 +132,7 @@ public class UserController {
                     )
                     })
     })
-    @GetMapping("/find/{email}")
+    @GetMapping("/search/{email}")
     public ResponseEntity<Users> showUsersByEmail(
             @Parameter(description = "add parameter email for get the user")
             @PathVariable String email) {
