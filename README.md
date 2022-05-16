@@ -1,5 +1,6 @@
-# Challenge 4
-Aplikasi cinematic adalah aplikasi untuk transaksi penayangan jadwal film sesuai jadwal.
+# Cinematic
+Aplikasi cinematic adalah aplikasi backend yang menggunakan teknologi spring boot, 
+sebagai transaksi penayangan jadwal film sesuai jadwal.
 # Technologies
 1. Spring boot
 2. Postgresql
