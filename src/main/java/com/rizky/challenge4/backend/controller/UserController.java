@@ -56,7 +56,7 @@ public class UserController {
                                     "password:manusia, " +
                                     "address: Surabaya" +
                                     '}'))})})
-    @PostMapping("/add/many-users")
+    @PostMapping("/admin/add-many-users")
     public ResponseEntity<String> addUsers(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Created user object", required = true)
 // Swagger Custom response body
