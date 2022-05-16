@@ -1,5 +1,12 @@
 # Challenge 4
-Test case menggunakan API
+Aplikasi cinematic adalah aplikasi untuk transaksi penayangan jadwal film sesuai jadwal.
+# Technologies
+1. Spring boot
+2. Postgresql
+3. JWT Token
+## Deployment to Heroku
+url: `https://cinematic21.herokuapp.com`
+## Test case menggunakan API
 
 | Jadwal & Film                             | User                         |
 |-------------------------------------------|------------------------------|
