@@ -85,7 +85,7 @@ public class UserController {
                                     "}]"))
                     })
     })
-    @GetMapping("/search/showall")
+    @GetMapping("/public/search/showall")
     public ResponseEntity<List<UserDto>> showAllUsers() {
         return ResponseEntity.status(202).body(userService.findAllUsers());
     }
@@ -99,7 +99,7 @@ public class UserController {
                                     example = "{id= 1, username:rizky, email:rizky@email.com, password:manusia, address: Surabaya}"))
                     })
     })
-    @GetMapping("/search/{id}")
+    @GetMapping("/public/search/{id}")
     public ResponseEntity<Users> showUsersById(
             @Parameter(description = "add id for get the user")
             @PathVariable("id") Long id) {
@@ -115,7 +115,7 @@ public class UserController {
                                     example = "{id= 1, username:rizky, email:rizky@email.com, password:manusia, address: Surabaya}"))
                     })
     })
-    @GetMapping("/search/{username}")
+    @GetMapping("/public/search/{username}")
     public ResponseEntity<Users> showUsersByUsername(
             @Parameter(description = "add parameter for get the user")
             @PathVariable String username) {
@@ -132,7 +132,7 @@ public class UserController {
                     )
                     })
     })
-    @GetMapping("/search/{email}")
+    @GetMapping("/public/search/{email}")
     public ResponseEntity<Users> showUsersByEmail(
             @Parameter(description = "add parameter email for get the user")
             @PathVariable String email) {

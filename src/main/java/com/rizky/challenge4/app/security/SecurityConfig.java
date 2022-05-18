@@ -39,13 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 //    --------------HTTP SECURITY-----------
-    //    --------------HTTP SECURITY-----------
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and()
                     .csrf().disable()
-                .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
@@ -67,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
