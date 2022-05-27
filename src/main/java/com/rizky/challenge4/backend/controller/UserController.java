@@ -1,5 +1,6 @@
 package com.rizky.challenge4.backend.controller;
 
+import com.rizky.challenge4.app.payload.request.SignupRequest;
 import com.rizky.challenge4.backend.model.dto.UserDto;
 import com.rizky.challenge4.backend.model.entity.Users;
 import com.rizky.challenge4.backend.service.UserService;
@@ -39,9 +40,9 @@ public class UserController {
                                     "address: Surabaya" +
                                     '}'))})})
     @PostMapping("/admin/add")
-    public ResponseEntity<String> addUser(@RequestBody UserDto user) {
-        userService.addUser(user);
-        return ResponseEntity.status(201).body(user.toString());
+    public ResponseEntity<String> addUser(@RequestBody SignupRequest request) {
+        userService.registerNewUser(new Users());
+        return ResponseEntity.status(201).body(request.toString());
     }
 
     @Operation(summary = "This method function to add many user detailing.")
@@ -60,7 +61,7 @@ public class UserController {
     public ResponseEntity<String> addUsers(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Created user object", required = true)
 // Swagger Custom response body
-            @RequestBody List<Users> user) {
+            @RequestBody Users user) {
         userService.addUsers(user);
         return ResponseEntity.status(201).body(user.toString());
     }

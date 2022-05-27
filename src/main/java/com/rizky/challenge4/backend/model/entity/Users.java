@@ -42,7 +42,7 @@ public class Users extends AbstractEntity {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Collection<Roles> roles = new HashSet<>();
+    private Collection<Roles> roles;
 
     public Users(String username, String email, String address, String password, Collection<Roles> roles) {
         this.username = username;

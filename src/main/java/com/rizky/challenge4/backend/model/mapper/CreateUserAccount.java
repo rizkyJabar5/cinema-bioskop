@@ -6,22 +6,19 @@ import com.rizky.challenge4.backend.model.entity.Roles;
 import com.rizky.challenge4.backend.model.entity.Users;
 import com.rizky.challenge4.backend.model.enums.ERole;
 import com.rizky.challenge4.backend.repository.RolesRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
+@AllArgsConstructor
 public class CreateUserAccount {
 
     private final EncoderConfig encode;
 
     private final RolesRepository roleRepository;
-
-    public CreateUserAccount(EncoderConfig encode, RolesRepository roleRepository) {
-        this.encode = encode;
-        this.roleRepository = roleRepository;
-    }
 
     public UserDto convertEntityToDto(Users user) {
         UserDto userdto = new UserDto();

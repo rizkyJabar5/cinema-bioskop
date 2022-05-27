@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserService {
 
-    void addUser(UserDto user);
+    void registerNewUser(Users user);
 
-    void addUsers(List<Users> user);
+    void addUsers(Users user);
 
     Users updateUser(Users User);
 
