@@ -1,4 +1,4 @@
-//package com.rizky.challenge4.app;
+package com.rizky.cinematic.app;
 //
 //import com.rizky.challenge4.backend.model.dto.FilmDto;
 //import com.rizky.challenge4.backend.model.dto.SeatsDto;

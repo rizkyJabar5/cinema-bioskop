@@ -29,7 +29,7 @@ public class SeatsConvert {
         SeatsDto seats = new SeatsDto();
         seats.setId(entity.getId());
         seats.setSeatsId(entity.getSeatsNumberId());
-//        TODO: LOGIC if the seats have not been taken, the seats can be taken or set.
+
         return seats;
     }
 

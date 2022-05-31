@@ -89,7 +89,6 @@ public class UserServiceImpl implements UserService, HasLogger {
 
     @Override
     public Users findByEmail(String email) {
-//        getLogger().info("Found user with email: {}", email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new NotFoundExceptions("Error: Not Found user with email: " + email));

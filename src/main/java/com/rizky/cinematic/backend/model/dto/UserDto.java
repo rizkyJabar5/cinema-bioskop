@@ -1,7 +1,6 @@
 package com.rizky.cinematic.backend.model.dto;
 
 
-import com.rizky.cinematic.backend.model.entity.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

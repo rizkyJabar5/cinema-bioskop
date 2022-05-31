@@ -17,10 +17,6 @@ import javax.persistence.*;
 public class Seats extends AbstractEntity {
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "seatsNumber", column = @Column(name = "seats_number")),
-            @AttributeOverride(name = "seatsRow", column = @Column(name = "seats_row"))
-    })
     private SeatsNumberID seatsNumberId;
 
     private boolean available;
