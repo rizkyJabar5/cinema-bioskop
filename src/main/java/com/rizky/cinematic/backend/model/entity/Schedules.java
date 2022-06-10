@@ -1,5 +1,6 @@
 package com.rizky.cinematic.backend.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,16 +8,18 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "schedules", uniqueConstraints = {
         @UniqueConstraint(columnNames = "film_id")
 })
-public class Schedules {
+public class Schedules implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

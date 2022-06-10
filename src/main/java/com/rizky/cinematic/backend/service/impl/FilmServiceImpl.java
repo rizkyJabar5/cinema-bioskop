@@ -8,6 +8,7 @@ import com.rizky.cinematic.backend.model.mapper.FilmDtoToModel;
 import com.rizky.cinematic.backend.repository.FilmRepository;
 import com.rizky.cinematic.backend.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,6 +86,7 @@ public class FilmServiceImpl implements FilmService, HasLogger {
     }
 
     @Override
+    @Cacheable(value = "filmCache")
     public List<Films> findFilmByOnShow() {
         return filmRepository.findFilmsByOnShow();
     }
